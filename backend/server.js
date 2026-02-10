@@ -23,7 +23,7 @@ require('dotenv').config({path: __dirname + '/.env'});
 const app = express();
 //cors (permiso para que el frontend acceda a la api)
 app.use(cors({
-  origin: "http://localhost:3001"
+  origin: "http://localhost:5173"
 }));
 
 app.use(express.json());
