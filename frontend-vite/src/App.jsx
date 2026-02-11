@@ -1,3 +1,4 @@
+// Componente principal de la aplicación de predicción meteorológica AEMET
 import { useState } from "react";
 import BuscadorProvincia from "./Components/BuscadorProvincia";
 import BuscadorMunicipio from "./Components/BuscadorMunicipio";
@@ -6,26 +7,30 @@ import ResultadoMunicipio from "./Components/ResultadoMunicipio";
 import "./App.css";
 
 function App() {
-  const [provinciaTexto, setProvinciaTexto] = useState(null);
-  const [municipios, setMunicipios] = useState([]);
-  const [pronostico, setPronostico] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  // Estados para gestionar datos de provincia y municipios
+  const [provinciaTexto, setProvinciaTexto] = useState(null);  // Texto de predicción provincial
+  const [municipios, setMunicipios] = useState([]);            // Lista de municipios de la provincia
+  const [pronostico, setPronostico] = useState(null);          // Predicción de 7 días del municipio
+  const [loading, setLoading] = useState(false);               // Estado de carga
+  const [error, setError] = useState(null);                    // Mensaje de error
 
-  // Buscar Provincia
+  // Busca la predicción de una provincia y carga sus municipios
   const buscarProvincia = async (codigoProvincia) => {
+    // Resetear estados previos
     setLoading(true);
     setError(null);
     setMunicipios([]);
     setPronostico(null);
 
     try {
+      // Obtener predicción de la provincia
       const resProvincia = await fetch(
         `http://localhost:3000/api/tiempo/provincia/${codigoProvincia}`
       );
       const jsonProvincia = await resProvincia.json();
       setProvinciaTexto(jsonProvincia.data);
 
+      // Obtener lista de municipios de la provincia
       const resMunicipios = await fetch(
         `http://localhost:3000/api/municipios/${codigoProvincia}`
       );
@@ -41,7 +46,7 @@ function App() {
     }
   };
 
-  // Buscar Municipio
+  // Busca la predicción de 7 días de un municipio específico
   const buscarMunicipio = async (codigoMunicipio) => {
     if (!codigoMunicipio) return;
 
@@ -62,23 +67,27 @@ function App() {
   };
 
   return (
-  <div className="app">
-    <h1>Buscador de tiempo AEMET</h1>
+    <div className="app">
+      <h1>Buscador de tiempo AEMET</h1>
 
-    <BuscadorProvincia onBuscar={buscarProvincia} />
+      {/* Selector de provincia */}
+      <BuscadorProvincia onBuscar={buscarProvincia} />
 
-    {provinciaTexto && <ResultadoProvincia data={provinciaTexto} />}
+      {/* Mostrar resultado de provincia si hay datos */}
+      {provinciaTexto && <ResultadoProvincia data={provinciaTexto} />}
 
-    {municipios.length > 0 && (
-      <BuscadorMunicipio
-        municipios={municipios}
-        onSeleccionar={buscarMunicipio}
-      />
-    )}
+      {/* Mostrar selector de municipios si hay municipios disponibles */}
+      {municipios.length > 0 && (
+        <BuscadorMunicipio
+          municipios={municipios}
+          onSeleccionar={buscarMunicipio}
+        />
+      )}
 
-    {pronostico && <ResultadoMunicipio data={pronostico} />}
-  </div>
-);
+      {/* Mostrar predicción de 7 días del municipio si está disponible */}
+      {pronostico && <ResultadoMunicipio data={pronostico} />}
+    </div>
+  );
 
 }
 

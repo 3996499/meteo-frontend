@@ -1,20 +1,25 @@
 import { useState } from "react";
 import { provincias } from "../data/provincias";
 
-export default function Buscador({onBuscar}) {
-    const [codigo, setCodigo] = useState("");
+// Componente buscador de provincias - Muestra un formulario para seleccionar y buscar una provincia
+export default function Buscador({ onBuscar }) {
+  // Estado que almacena el código de la provincia seleccionada
+  const [codigo, setCodigo] = useState("");
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const limpio = codigo.trim();
-        if (!limpio) return;
-        onBuscar(limpio);
-    };
+  // Maneja el envío del formulario
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const limpio = codigo.trim();
+    // Solo buscar si hay un código válido
+    if (!limpio) return;
+    onBuscar(limpio);
+  };
 
 
-     return (
+  return (
     <form onSubmit={handleSubmit}>
       <select value={codigo} onChange={(e) => setCodigo(e.target.value)}>
+        {/* Renderizar todas las provincias disponibles */}
         {provincias.map((p) => (
           <option key={p.codigo} value={p.codigo}>
             {p.nombre}
