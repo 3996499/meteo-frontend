@@ -22,8 +22,12 @@ export default function ResultadoMunicipio({ data }) {
       <ul className="pronostico">
         {/* Renderizar cada día con su información meteorológica */}
         {data.map((dia, index) => (
-          <li key={index}>
-            📅 <strong>{formatearFecha(dia.fecha)}</strong> — 🌡️ {dia.tmin}°C / {dia.tmax}°C · ☁️ {dia.estadoCielo} · 🌧️ {dia.precipitacion}%
+          <li key={index} className="dia-card">
+            <h3>{formatearFecha(dia.fecha)}</h3>
+
+            <p>🌡️ {dia.tmin}°C / {dia.tmax}°C</p>
+            <p>☁️ {dia.estadoCielo}</p>
+            <p>🌧️ {dia.precipitacion}%</p>
           </li>
 
 
