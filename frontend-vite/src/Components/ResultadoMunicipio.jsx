@@ -11,7 +11,7 @@ function formatearFecha(fechaISO) {
 }
 
 // Componente que muestra la predicción meteorológica de 7 días para un municipio
-export default function ResultadoMunicipio({ data, municipio }) {
+export default function ResultadoMunicipio({ data }) {
   // Si no hay datos válidos, no renderizar nada
   if (!Array.isArray(data) || data.length === 0) return null;
 

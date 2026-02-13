@@ -41,17 +41,17 @@ function App() {
         `/api/tiempo/provincia/${codigoProvincia}`
 
       );
-      const jsonProvincia = await resProvincia.json();
-      setProvinciaTexto(jsonProvincia.data);
+      //const jsonProvincia = await resProvincia.json();
+      setProvinciaTexto(resProvincia.data);
 
       // Obtener lista de municipios de la provincia
-      const resMunicipios = await fetch(
-        `${API_URL}/api/municipios/${codigoProvincia}`
+      const resMunicipios = await fetchAPI(
+        `/api/municipios/${codigoProvincia}`
       );
-      const jsonMunicipios = await resMunicipios.json();
+      //const jsonMunicipios = await resMunicipios.json();
 
-      if (jsonMunicipios.success) {
-        setMunicipios(jsonMunicipios.data);
+      if (resMunicipios.success) {
+        setMunicipios(resMunicipios.data);
       }
     } catch (err) {
       setError(err.message);
@@ -71,8 +71,8 @@ function App() {
       const response = await fetchAPI(
         `/api/tiempo/municipio/${codigoMunicipio}`
       );
-      const json = await response.json();
-      setPronostico(json.prediccion);
+      setPronostico(response.prediccion);
+
     } catch (err) {
       setError(err.message);
     } finally {
