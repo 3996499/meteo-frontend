@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 3000;
 
 // Permitir peticiones desde el frontend (Vite)
 app.use(cors({
-  origin: "http://localhost:5173"
+  origin: process.env.FRONTEND_URL || "http://localhost:5173"
 }));
 
 // Parsear JSON en el body de las peticiones
