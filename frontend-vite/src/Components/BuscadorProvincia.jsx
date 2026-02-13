@@ -2,7 +2,7 @@ import { useState } from "react";
 import { provincias } from "../data/provincias";
 
 // Componente buscador de provincias - Muestra un formulario para seleccionar y buscar una provincia
-export default function Buscador({ onBuscar }) {
+export default function BuscadorProvincia({ onBuscar }) {
   // Estado que almacena el código de la provincia seleccionada
   const [codigo, setCodigo] = useState("");
 
