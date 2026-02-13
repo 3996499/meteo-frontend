@@ -13,6 +13,7 @@ function App() {
   const [pronostico, setPronostico] = useState(null);          // Predicción de 7 días del municipio
   const [loading, setLoading] = useState(false);               // Estado de carga
   const [error, setError] = useState(null);                    // Mensaje de error
+  const API_URL = import.meta.env.VITE_API_URL;                //URL de la API
 
   // Busca la predicción de una provincia y carga sus municipios
   const buscarProvincia = async (codigoProvincia) => {
@@ -25,14 +26,15 @@ function App() {
     try {
       // Obtener predicción de la provincia
       const resProvincia = await fetch(
-        `http://localhost:3000/api/tiempo/provincia/${codigoProvincia}`
+        `${API_URL}/api/tiempo/provincia/${codigoProvincia}`
+        
       );
       const jsonProvincia = await resProvincia.json();
       setProvinciaTexto(jsonProvincia.data);
 
       // Obtener lista de municipios de la provincia
       const resMunicipios = await fetch(
-        `http://localhost:3000/api/municipios/${codigoProvincia}`
+        `${API_URL}/api/municipios/${codigoProvincia}`
       );
       const jsonMunicipios = await resMunicipios.json();
 
@@ -55,7 +57,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/tiempo/municipio/${codigoMunicipio}`
+        `${API_URL}/api/tiempo/municipio/${codigoMunicipio}`
       );
       const json = await response.json();
       setPronostico(json.prediccion);
