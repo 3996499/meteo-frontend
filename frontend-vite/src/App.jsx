@@ -15,6 +15,18 @@ function App() {
   const [error, setError] = useState(null);                    // Mensaje de error
   const API_URL = import.meta.env.VITE_API_URL;                // URL de la API
 
+  // Función para obtener datos de la API
+  async function fetchAPI(endpoint){
+    const response = await fetch(`${API_URL}${endpoint}`);
+    
+    if (!response.ok){
+      throw new Error(`Error al obtener datos de la API.`);
+    }
+    return response.json();
+  }
+
+
+
   // Busca la predicción de una provincia y carga sus municipios
   const buscarProvincia = async (codigoProvincia) => {
     // Resetear estados previos
@@ -25,8 +37,8 @@ function App() {
 
     try {
       // Obtener predicción de la provincia
-      const resProvincia = await fetch(
-        `${API_URL}/api/tiempo/provincia/${codigoProvincia}`
+      const resProvincia = await fetchAPI(
+        `/api/tiempo/provincia/${codigoProvincia}`
 
       );
       const jsonProvincia = await resProvincia.json();
@@ -56,8 +68,8 @@ function App() {
     setError(null);
 
     try {
-      const response = await fetch(
-        `${API_URL}/api/tiempo/municipio/${codigoMunicipio}`
+      const response = await fetchAPI(
+        `/api/tiempo/municipio/${codigoMunicipio}`
       );
       const json = await response.json();
       setPronostico(json.prediccion);
@@ -91,7 +103,7 @@ function App() {
       {municipios.length === 0 && provinciaTexto && (
         <p>No hay municipios disponibles para esta provincia.</p>
       )}
-      
+
       {/* Mostrar selector de municipios si hay municipios disponibles */}
       {municipios.length > 0 && (
         <BuscadorMunicipio
