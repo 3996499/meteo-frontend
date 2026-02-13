@@ -20,7 +20,10 @@ function App() {
     const response = await fetch(`${API_URL}${endpoint}`);
     
     if (!response.ok){
-      throw new Error(`Error al obtener datos de la API.`);
+      throw new Error(
+     `Error ${response.status}: ${response.statusText}`
+
+      );
     }
     return response.json();
   }
@@ -85,7 +88,7 @@ function App() {
       <h1>Buscador de tiempo AEMET</h1>
 
       {/* Mensajes de carga y error */}
-      {loading && <p className="loading">Cargando datos...</p>}
+      {loading && <p className="loading">⏳  Cargando datos...</p>}
 
       {error && (
         <p className="error">

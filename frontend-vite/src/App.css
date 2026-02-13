@@ -84,10 +84,17 @@ button:hover {
 .error {
   color: red;
   font-weight: bold;
+  background: #ffe5e5;
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 10px;
 }
+
 
 .loading {
   font-style: italic;
+  margin-top: 10px;
+  font-weight: bold;
 }
 
 
