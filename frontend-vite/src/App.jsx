@@ -13,7 +13,7 @@ function App() {
   const [pronostico, setPronostico] = useState(null);          // Predicción de 7 días del municipio
   const [loading, setLoading] = useState(false);               // Estado de carga
   const [error, setError] = useState(null);                    // Mensaje de error
-  const API_URL = import.meta.env.VITE_API_URL;                //URL de la API
+  const API_URL = import.meta.env.VITE_API_URL;                // URL de la API
 
   // Busca la predicción de una provincia y carga sus municipios
   const buscarProvincia = async (codigoProvincia) => {

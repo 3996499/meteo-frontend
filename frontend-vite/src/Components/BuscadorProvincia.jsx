@@ -19,6 +19,8 @@ export default function Buscador({ onBuscar }) {
   return (
     <form onSubmit={handleSubmit}>
       <select value={codigo} onChange={(e) => setCodigo(e.target.value)}>
+        {/* Opción por defecto */}
+        <option value="">Selecciona una provincia</option>
         {/* Renderizar todas las provincias disponibles */}
         {provincias.map((p) => (
           <option key={p.codigo} value={p.codigo}>
@@ -26,8 +28,10 @@ export default function Buscador({ onBuscar }) {
           </option>
         ))}
       </select>
-
-      <button type="submit">Buscar</button>
+      {/* Botón de búsqueda deshabilitado si no hay código seleccionado */}
+      <button type="submit" disabled={!codigo}>
+        Buscar
+      </button>
     </form>
   );
 }
