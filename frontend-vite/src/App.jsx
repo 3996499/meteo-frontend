@@ -87,6 +87,11 @@ function App() {
       {/* Mostrar resultado de provincia si hay datos */}
       {provinciaTexto && <ResultadoProvincia data={provinciaTexto} />}
 
+      {/* Mostrar mensaje si no hay municipios disponibles */}
+      {municipios.length === 0 && provinciaTexto && (
+        <p>No hay municipios disponibles para esta provincia.</p>
+      )}
+      
       {/* Mostrar selector de municipios si hay municipios disponibles */}
       {municipios.length > 0 && (
         <BuscadorMunicipio
