@@ -16,12 +16,12 @@ function App() {
   const API_URL = import.meta.env.VITE_API_URL;                // URL de la API
 
   // Función para obtener datos de la API
-  async function fetchAPI(endpoint){
+  async function fetchAPI(endpoint) {
     const response = await fetch(`${API_URL}${endpoint}`);
-    
-    if (!response.ok){
+
+    if (!response.ok) {
       throw new Error(
-     `Error ${response.status}: ${response.statusText}`
+        `Error ${response.status}: ${response.statusText}`
 
       );
     }
@@ -117,7 +117,13 @@ function App() {
       )}
 
       {/* Mostrar predicción de 7 días del municipio si está disponible */}
-      {pronostico && <ResultadoMunicipio data={pronostico} />}
+      {pronostico && pronostico.length === 0 && (
+        <p>No hay predicción disponible para este municipio.</p>
+      )}
+
+      {pronostico && pronostico.length > 0 && (
+        <ResultadoMunicipio data={pronostico} />
+      )}
     </div>
   );
 
