@@ -1,12 +1,13 @@
 // Convierte una fecha ISO a formato legible en español (ej: "lunes, 15 de enero")
 function formatearFecha(fechaISO) {
   const fecha = new Date(fechaISO);
-  return fecha.toLocaleDateString("es-ES", {
+
+  const texto = fecha.toLocaleDateString("es-ES", {
     weekday: "long",
     day: "numeric",
     month: "long"
   });
-
+  return texto.charAt(0).toUpperCase() + texto.slice(1);
 }
 
 // Componente que muestra la predicción meteorológica de 7 días para un municipio
