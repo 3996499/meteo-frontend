@@ -10,6 +10,21 @@ function formatearFecha(fechaISO) {
   return texto.charAt(0).toUpperCase() + texto.slice(1);
 }
 
+
+function obtenerIcono(estado) {
+  if (!estado) return "🌤️";
+
+  const texto = estado.toLowerCase();
+
+  if (texto.includes("despejado")) return "☀️";
+  if (texto.includes("nube")) return "☁️";
+  if (texto.includes("lluvia")) return "🌧️";
+  if (texto.includes("tormenta")) return "⛈️";
+  if (texto.includes("nieve")) return "❄️";
+
+  return "🌤️";
+}
+
 // Componente que muestra la predicción meteorológica de 7 días para un municipio
 export default function ResultadoMunicipio({ data }) {
   // Si no hay datos válidos, no renderizar nada
@@ -26,7 +41,7 @@ export default function ResultadoMunicipio({ data }) {
             <h3>{formatearFecha(dia.fecha)}</h3>
 
             <p>🌡️ {dia.tmin}°C / {dia.tmax}°C</p>
-            <p>☁️ {dia.estadoCielo}</p>
+            <p>{obtenerIcono(dia.estadoCielo)} {dia.estadoCielo}</p>
             <p>🌧️ {dia.precipitacion}%</p>
           </li>
 

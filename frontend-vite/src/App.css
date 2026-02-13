@@ -165,5 +165,10 @@ button:hover {
 }
 
 .dia-card p {
+  font-size: 16px;
   margin: 4px 0;
+}
+
+.dia-card p:first-of-type {
+  font-weight: bold;
 }
