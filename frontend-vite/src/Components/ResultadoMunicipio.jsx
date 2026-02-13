@@ -6,6 +6,7 @@ function formatearFecha(fechaISO) {
     day: "numeric",
     month: "long"
   });
+
 }
 
 // Componente que muestra la predicción meteorológica de 7 días para un municipio
@@ -23,6 +24,8 @@ export default function ResultadoMunicipio({ data, municipio }) {
           <li key={index}>
             📅 <strong>{formatearFecha(dia.fecha)}</strong> — 🌡️ {dia.tmin}°C / {dia.tmax}°C · ☁️ {dia.estadoCielo} · 🌧️ {dia.precipitacion}%
           </li>
+
+
         ))}
 
 

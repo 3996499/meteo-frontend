@@ -27,7 +27,7 @@ function App() {
       // Obtener predicción de la provincia
       const resProvincia = await fetch(
         `${API_URL}/api/tiempo/provincia/${codigoProvincia}`
-        
+
       );
       const jsonProvincia = await resProvincia.json();
       setProvinciaTexto(jsonProvincia.data);
@@ -71,6 +71,15 @@ function App() {
   return (
     <div className="app">
       <h1>Buscador de tiempo AEMET</h1>
+
+      {/* Mensajes de carga y error */}
+      {loading && <p className="loading">Cargando datos...</p>}
+
+      {error && (
+        <p className="error">
+          Error: {error}
+        </p>
+      )}
 
       {/* Selector de provincia */}
       <BuscadorProvincia onBuscar={buscarProvincia} />
