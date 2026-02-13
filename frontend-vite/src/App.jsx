@@ -109,6 +109,7 @@ function App() {
         <BuscadorMunicipio
           municipios={municipios}
           onSeleccionar={buscarMunicipio}
+          loading={loading}
         />
       )}
 

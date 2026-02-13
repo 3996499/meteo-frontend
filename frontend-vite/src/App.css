@@ -172,3 +172,9 @@ button:hover {
 .dia-card p:first-of-type {
   font-weight: bold;
 }
+
+
+select:disabled{
+  opacity: 0.5;
+  cursor: not-allowed;
+}
