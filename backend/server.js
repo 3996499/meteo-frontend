@@ -1,6 +1,8 @@
 // IMPORTACIÓN DE DEPENDENCIAS
 
 // npm install iconv-lite (texto aemet)
+const fs = require("fs");
+const path = require("path");
 const iconv = require("iconv-lite");
 const express = require("express");
 const cors = require("cors");
@@ -11,6 +13,9 @@ require("dotenv").config({ path: __dirname + "/.env" });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const municipios = JSON.parse(
+  fs.readFileSync(path.join(__dirname, "data/municipios.json"), "utf-8")
+);
 
 // Permitir peticiones desde el frontend (Vite)
 app.use(cors({
@@ -60,7 +65,7 @@ app.get("/api/tiempo/provincia/:codigo", async (req, res) => {
       error: error.message
     });
   }
-});
+  });
 
 
 // BÚSQUEDA POR MUNICIPIO
@@ -118,53 +123,18 @@ app.get("/api/tiempo/municipio/:codigoMunicipio", async (req, res) => {
 
 
 // BÚSQUEDA DE MUNICIPIOS POR PROVINCIA
-app.get("/api/municipios/:codigoProvincia", async (req, res) => {
-  try {
-    const { codigoProvincia } = req.params;
+app.get("/api/municipios/:codigoProvincia", (req, res) => {
+  const { codigoProvincia } = req.params;
 
-    const urlAemet = `https://opendata.aemet.es/opendata/api/maestro/municipios?api_key=${process.env.AEMET_API_KEY}`;
+  const lista = municipios.filter(
+    m => m.provincia === codigoProvincia
+  );
 
-    const response = await fetch(urlAemet);
-    if (!response.ok) {
-      throw new Error(`Error HTTP ${response.status}`);
-    }
-
-    const info = await response.json();
-
-    if (!info.datos || typeof info.datos !== "string") {
-      throw new Error("Respuesta inesperada de AEMET");
-    }
-
-    const datosResponse = await fetch(info.datos);
-    if (!datosResponse.ok) {
-      throw new Error("Error al obtener municipios");
-    }
-
-    const buffer = Buffer.from(await datosResponse.arrayBuffer());
-    const datos = iconv.decode(buffer, "ISO-8859-1");
-
-    const municipios = JSON.parse(datos);
-
-    const municipiosProvincia = municipios
-      .filter(m => m.id.startsWith(codigoProvincia.padStart(2, "0")))
-      .map(m => ({
-        id: m.id,
-        nombre: m.nombre
-      }));
-
-    res.json({
-      success: true,
-      total: municipiosProvincia.length,
-      data: municipiosProvincia
-    });
-
-  } catch (error) {
-    console.error("ERROR MUNICIPIOS:", error.message);
-    res.status(500).json({
-      success: false,
-      error: error.message
-    });
-  }
+  res.json({
+    success: true,
+    total: lista.length,
+    data: lista
+  });
 });
 
 
